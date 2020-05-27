@@ -17,27 +17,29 @@ class Counter extends Component {
     this.increment = this.increment.bind(this);
     this.decrement = this.decrement.bind(this);
     this.reset = this.reset.bind(this);
+    this.updateDocumentTitle = this.updateDocumentTitle.bind(this);
+  }
+
+  updateDocumentTitle() {
+    document.title = `Counter: ${this.state.count}`;
   }
 
   increment() {
-    this.setState(
-      (state, props) => {
-        if (state.count >= props.max) return;
-        return { count: state.count + props.step };
-      },
-      () => localStorage.setItem('counterState', JSON.stringify(this.state)),
-    );
+    this.setState((state, props) => {
+      if (state.count >= props.max) return;
+      return { count: state.count + props.step };
+    }, this.updateDocumentTitle);
 
     console.log('after');
   }
 
   decrement() {
-    this.setState({ count: this.state.count - 1 });
+    this.setState({ count: this.state.count - 1 }, this.updateDocumentTitle);
   }
 
   reset() {
     // this.setState({ count: this.state.count + 1 });
-    this.setState({ count: 0 });
+    this.setState({ count: 0 }, this.updateDocumentTitle);
   }
 
   render() {
