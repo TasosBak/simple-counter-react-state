@@ -1,3 +1,5 @@
+# FEM Steve Kinney React State course; my take.
+
 # From Component State to Hooks
 
 We're going to start with a [super simple counter](https://github.com/stevekinney/simple-counter).
@@ -120,7 +122,7 @@ Two questions:
 `this.setState` also takes a function. This means we could refactor `increment()` as follows.
 
 ```js
-this.setState(state => {
+this.setState((state) => {
   return { count: state.count + 1 };
 });
 ```
@@ -153,7 +155,7 @@ render(<Counter max={10} />, document.getElementById('root'));
 ```
 
 ```js
-this.setState(state => {
+this.setState((state) => {
   if (state.count >= this.props.max) return;
   return { count: state.count + 1 };
 });
@@ -267,7 +269,7 @@ We could handle this a few ways.
 We could use an anonymous function and then pass it in as an argument.
 
 ```js
-const storeStateInLocalStorage = state => {
+const storeStateInLocalStorage = (state) => {
   localStorage.setItem('counterState', JSON.stringify(state));
 };
 ```
@@ -359,7 +361,7 @@ It also turns out that `useState` setters can take functions too.
 
 ```js
 const increment = () => {
-  setCount(c => c + 1);
+  setCount((c) => c + 1);
 };
 ```
 
@@ -367,9 +369,9 @@ Unlike using values, using functions also works the same way as it does with `th
 
 ```js
 const increment = () => {
-  setCount(c => c + 1);
-  setCount(c => c + 1);
-  setCount(c => c + 1);
+  setCount((c) => c + 1);
+  setCount((c) => c + 1);
+  setCount((c) => c + 1);
 };
 ```
 
@@ -380,7 +382,7 @@ They also do _not_ support callback functions like `this.setState`. Later on, we
 Earlier with `this.setState`, we ended up returning `undefined` if our count had hit the max. What if we did something similar here?
 
 ```js
-setCount(c => {
+setCount((c) => {
   if (c >= max) return;
   return c + 1;
 });
@@ -393,7 +395,7 @@ With `this.setState`, we're giving the component that object of values that it n
 How can we fix this?
 
 ```js
-setCount(c => {
+setCount((c) => {
   if (c >= max) return c;
   return c + 1;
 });
@@ -541,7 +543,7 @@ We'll update the component to look something like this:
 
 ```js
 <main className="Application">
-  {counters.map(id => (
+  {counters.map((id) => (
     <Counter id={id} key={id} />
   ))}
   <section className="controls">
